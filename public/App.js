@@ -29,6 +29,7 @@ const App = new QComponent('#app', {
   run: () => {
     Home.element.style.display = 'none';
     Form.element.style.display = 'none';
+    console.log(Preview.dataQF)
   }
 });
 

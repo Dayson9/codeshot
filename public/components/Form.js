@@ -7,7 +7,30 @@ const Form = new subComponent('Form', {
   template: () => {
     return `
     <div display={{ this.data.display }} id='main'>
-    
+      <h1 class="pxp-el0">Get Started</h1>
+      <div class="pxp-el1">
+        <span class="pxp-el2">Code snippet:</span>
+        <textarea class="pxp-el3" placeholder='//paste your code here' id='codeInput'></textarea>
+      </div>
+      <div class="pxp-el1">
+        <span class="pxp-el2">Language:</span>
+        <select class="pxp-el4">
+          <option>JavaScript</option>
+          <option>Rust</option>
+          <option>Golang</option>
+          <option>C</option>
+          <option>Kotlin</option>
+          <option>Swift</option>
+          <option>Dart</option>
+          <option>HTML</option>
+          <option>CSS</option>
+          <option>Python</option>
+          <option>C#</option>
+          <option>C++</option>
+          <option>Java</option>
+        </select>
+      </div>
+      <Button { label: 'Preview', click: "processCode(codeInput.value)", icon: "bx bxs-image", bottom: 40 } />
     </div>
 `
   },
@@ -19,87 +42,65 @@ const Form = new subComponent('Form', {
       padding: 0;
       box-sizing: border-box;
     `,
+
     '.pxp-el0': `  
-       color: white;
-       text-align: center;
-       font-family: Inter;
-       `,
+      color: white;
+      text-align: center;
+      font-family: Inter;
+      margin: 20px auto 40px;
+      `,
 
     '.pxp-el1': `  
-       width: 100%;
-       padding: 40px 0px;
-       transform: translateY(5vh);
-       display: flex;
-       flex-direction: column;
-       justify-content: space-between;
-       align-items: center;
-       border-radius: 20px;
-       height: 330px;
-       `,
+      width: 90%;
+      height: auto;
+      margin: 10px 0px 0px 20px;
+      padding: 20px 0px;
+      display: flex;
+      flex-direction: column;
+      `,
 
     '.pxp-el2': `  
-       color: white;
-       width: 100%;
-       padding: 10px 0px;
-       display: inherit;
-       flex-direction: inherit;
-       justify-content: space-evenly;
-       height: 130px;
-       `,
+      color: white;
+      font-family: Inter;
+      `,
 
     '.pxp-el3': `  
-       transform: translateX(20px);
-       display: block;
-       font-family: Inter;
-       `,
+      background: transparent;
+      border-radius: 10px;
+      border: 2px solid grey;
+      margin: 10px 0px;
+      height: 190px;
+      width: 90%;
+      color: white;
+      box-sizing: border-box;
+      padding: 10px;
+      font-family: Inter;
+      outline: none;
+      `,
 
     '.pxp-el4': `  
-       background: transparent;
-       border: 2px solid silver;
-       width: 80%;
-       transform: translate(20px, 10px);
-       height: 120px;
-       border-radius: 20px;
-       color: white;
-       box-sizing: border-box;
-       padding: 10px;
-       font-family: Inter;
-       `,
-
-    '.pxp-el5': `  
-       width: 80%;
-       height: 45px;
-       transform: translateX(20px);
-       background: inherit;
-       border-radius: 10px;
-       border: 2px solid silver;
-       color: white;
-       font-family: Inter;
-       `,
-
-    '.pxp-el7': `  
-       height: 48px;
-       border: none;
-       border-radius: 10px;
-       font-family: Inter;
-       width: 90%;
-       background: linear-gradient(120deg, rgb(249, 186, 51), rgb(252, 223, 80));
-       display: flex;
-       flex-direction: row;
-       align-items: center;
-       justify-content: space-around;
-       padding: 0px 22%;
-       `,
-
-    '.pxp-el8': `  
-       font-size: 25px;
-       `,
-
-    '.pxp-el9': `  
-       font-family: Inter;
-       font-weight: 500;
-       font-size: 15px;
-       `
+      margin: 10px 0px;
+      width: 90%;
+      height: 45px;
+      border-radius: 10px;
+      background: transparent;
+      color: white;
+      font-family: Inter;
+      border: 2px solid grey;
+      outline: none;
+      `,
+      
+    'textarea:focus' : `
+      border: 1px solid white;
+    `,
+    
+    'select:focus': `
+      border: 1px solid white;
+    `,
+    
+    'textarea::placeholder': `
+      color: silver;
+    `,
   }
 });
 

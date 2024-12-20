@@ -3,37 +3,38 @@ import { subComponent } from 'queflow';
 
 const Preview = new subComponent('Preview', {
   data: {
-    display: 'none'
+    display: 'none',
+    x: 5,
+    blur: 0,
+    code: ""
   },
   template: () => {
     return `
-    <div display={{ this.data.display }} id='main'>
-      <div class="pxp-el0">
-        <span class="bx bx-x pxp-el1" onclick={{ history.go(-1); }}></span>
-        <h1 class="pxp-el2">Preview</h1>
-        <span class="pxp-el3"></span>
-      </div>
-    <div class="pxp-el4">
-      <div class="pxp-el5">
-        <div class="pxp-el6">
-        <div class="pxp-el7">
-          <span class="pxp-el8"></span>
-          <span class="pxp-el9"></span>
-          <span class="pxp-el10"></span>
+      <div display={{ this.data.display }} id='main' filter={{ 'blur('+this.data.blur+'px)' }}>
+        <div class="pxp-el0">
+          <span class="bx bx-x pxp-el1" onclick={{ history.go(-1); }}></span>
+          <h1 class="pxp-el2">Preview</h1>
+          <span class="pxp-el3"></span>
         </div>
-        <div class="pxp-el11"><span class="bx bxl-javascript pxp-el12"></span>
-        <span class="pxp-el13">index.js</span>
+      <div class="pxp-el4" id='out' transform={{ 'translateX('+this.data.x+'%)' }}>
+        <div class="pxp-el5">
+          <div class="pxp-el6">
+            <div class="pxp-el7">
+              <span class="pxp-el8"></span>
+              <span class="pxp-el9"></span>
+              <span class="pxp-el10"></span>
+            </div>
+          <div class="pxp-el11">
+            <span class="bx bxl-javascript pxp-el12" color='gold'></span>
+          </div>
+        </div>
+        <div class="pxp-el14">
+            <pre>{{ this.data.code }}</pre>
+        </div>
       </div>
     </div>
-      <div class="pxp-el14"><span class="pxp-el15">const name = "Cole Palmer";</span>
-        <span class="pxp-el16">console.log(name);</span>
-      </div>
-    </div>
-  </div>
-  <button class="pxp-el17"><span class="bx bxs-download pxp-el18"></span>
-    <span class="pxp-el19">Download</span>
-  </button>
-  </div>`;
+    <Button { label: 'Download', click: 'saveAsImage()', icon: 'bx bxs-download' } />
+    </div>`;
   },
 
   stylesheet: {
@@ -72,23 +73,23 @@ const Preview = new subComponent('Preview', {
       box-sizing: border-box;
       `,
 
-    '.pxp-el4': `  
-      width: 90%;
-      height: auto;
-      padding: 30px 0px;
-      margin: 20px auto 0px;
+    '.pxp-el4': `
+      width: auto;
+      min-width: 100vw;
+      padding: 0px;
       border-radius: 10px;
       background: transparent;
-      border: 1px solid silver;
+      box-sizing: content-box;
       `,
 
     '.pxp-el5': `  
-      width: 90%;
-      margin: 0px auto;
+      width: 100%;
       background: rgb(51, 62, 66);
       border-radius: inherit;
       height: auto;
       padding: 5px 0px 0px;
+      letter-spacing: 2px;
+      box-sizing: content-box;
       `,
 
     '.pxp-el6': `  
@@ -99,7 +100,7 @@ const Preview = new subComponent('Preview', {
       `,
 
     '.pxp-el7': `  
-      width: 25%;
+      width: 75px;
       height: 100%;
       display: flex;
       flex-direction: row;
@@ -132,88 +133,35 @@ const Preview = new subComponent('Preview', {
       background: rgb(43, 161, 56);
       `,
 
-    '.pxp-el11': `  
+    '.pxp-el11': ` 
+      width: 100%;
       height: 100%;
       display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
       background: rgb(37, 50, 56);
       border-radius: 8px 8px 0px 0px;
       width: auto;
-      padding: 0px 15px;
       transform: translate(10px, 0px);
+      padding-inline: 12px;
       `,
-
-    '.pxp-el12': `  
-      font-size: 17px;
-      margin: 0px 5px 0px 0px;
-      color: gold;
-      `,
-
-    '.pxp-el13': `  
-      background: transparent;
-      font-family: Inter;
-      font-size: 13px;
-      color: lightblue;
-      `,
-
     '.pxp-el14': `  
       width: 100%;
+      min-width: 100%;
       height: auto;
-      padding: 20px 0px 20px 12px;
       background: rgb(37, 50, 56);
       border-radius: 0px 0px 10px 10px;
       display: flex;
-      box-sizing: border-box;
-      flex-direction: column;
       align-items: start;
-      justify-content: space-between;
+      padding-inline: 10px;
+      box-sizing: content-box;
       `,
-
-    '.pxp-el15': `  
-      color: lightblue;
-      font-family: Inter;
-      font-size: 12px;
-      display: block;
-      `,
-
-    '.pxp-el16': `  
-      color: lightblue;
-      font-family: Inter;
-      font-size: 12px;
-      display: block;
-      margin: 5px 0px 0px;
-      `,
-
-    '.pxp-el17': `  
-      color: rgb(15, 15, 20);
-      background: linear-gradient(135deg, rgb(249, 166, 51), rgb(252, 223, 80));
-      width: 90%;
-      height: 40px;
-      border-radius: 15px;
-      border: none;
-      margin: 20px 0px 0px;
-      transform: translateX(5%);
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      box-sizing: border-box;
-      padding: 0px 110px;
-      `,
-
-    '.pxp-el18': `  
-      font-weight: 500;
-      font-size: 22px;
-      `,
-
-    '.pxp-el19': `  
-      font-family: Inter;
-      font-size: 17px;
-      font-weight: 550;
-      `,
-  }
+      
+    'pre' : `
+      padding-inline: 10px;
+    `
+  },
+  useStrict: false
 });
 
 export default Preview;

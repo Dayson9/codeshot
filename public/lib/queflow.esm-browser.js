@@ -99,13 +99,15 @@
  }
 
  // Sanitizes a string to prevent potential XSS attacks.
- function sanitizeString(str) {
-   let excluded_chars = [{ from: "&gt;", to: ">" }, { from: "&lt;", to: "<" }, { from: "<script>", to: "&lt;script&gt;" }, { from: "</script>", to: "&lt;/script&gt;" }];
+ function sanitizeString(str, shouldSkip) {
+   const excluded_chars = [{ from: "&gt;", to: ">" }, { from: "&lt;", to: "<" }, { from: "<script>", to: "&lt;script&gt;" }, { from: "</script>", to: "&lt;/script&gt;" }];
 
    str = new String(str);
 
-   for (let { from, to } of excluded_chars) {
-     str = str.replaceAll(from, to);
+   for (const index in excluded_chars) {
+     const { from, to } = excluded_chars[index];
+     if (!shouldSkip && index !== 0)
+       str = str.replaceAll(from, to);
    }
 
    return str.replace(/javascript:/gi, '');
@@ -117,36 +119,35 @@
    let out = "";
 
    const regex = /\{\{[^\{\{]+\}\}/g;
-   if (regex.test(reff)) {
-     try {
-       out = reff.replace(regex, (match) => {
-         const ext = b(match),
-           parse = () => Function('return ' + ext).call(instance),
-           parsed = parse();
+   try {
+     const falsy = [undefined, NaN, null];
+     out = reff.replace(regex, (match) => {
 
-         const falsy = [undefined, NaN, null];
-         let rendered = "";
+       const ext = b(match.replace('&gt;', '>')),
+         parse = () => Function('return ' + ext).call(instance),
+         parsed = parse();
+       let rendered = "";
 
-         if (falsy.includes(parsed) && parsed != "0") {
-           rendered = match;
-         } else {
-           rendered = parsed;
-         }
-         return rendered;
-       })
+       if (falsy.includes(parsed) && parsed != "0") {
+         rendered = match;
+       } else {
+         rendered = parsed;
+       }
+       return rendered;
+     })
 
-     } catch (error) {
-       // Prevents unnecessary errors 
-       let reg = /Unexpected token/i;
-       if (!reg.test(error))
-         console.error("QueFlow Error:\nAn error occurred while parsing JSX/HTML:\n\n" + error);
-     }
-     return out;
-   } else {
-     // Returns the evaluated template string.
-     return reff;
+   } catch (error) {
+     // Prevents unnecessary errors 
+     let reg = /Unexpected token/i;
+     if (!reg.test(error))
+       console.error("QueFlow Error:\nAn error occurred while parsing JSX/HTML:\n\n" + error);
    }
+
+
+   // Returns the evaluated template string.
+   return out;
  }
+
 
  // Gets the attributes of a DOM element.
  function getAttributes(el) {
@@ -183,7 +184,6 @@
      data = [];
    let d = parser.parseFromString(jsx, "text/html"),
      doc = d.body;
-
 
    try {
      let targetElements = doc.querySelectorAll("*");
@@ -269,7 +269,6 @@
 
      if ((child.style[attribute] || child.style[attribute] === "") && !isSVGElement) {
        child.style[attribute] = evaluateTemplate(value, instance);
-
        if (attribute.toLowerCase() !== "src") {
          child.removeAttribute(attribute);
        }
@@ -438,7 +437,8 @@
 
    const output = input.replace(regex, (match) => {
      const extracted = b(match).trim();
-     return props[extracted] ? sanitizeString(props[extracted]) : `{{ ${extracted} }}`;
+     const value = props[extracted];
+     return value ? sanitizeString(value, true) : `{{ ${extracted} }}`;
    });
 
    return output;
@@ -534,11 +534,8 @@
  }
 
  const renderSubComponent = (instance, name) => {
-   if (instance.element === "") {
-     let template = "<div>" + (instance.template instanceof Function ? instance.template() : instance.template) + "</div>";
-   } else {
-     let template = (instance.template instanceof Function ? instance.template() : instance.template);
-   }
+   let template = "<div>" + (instance.template instanceof Function ? instance.template() : instance.template) + "</div>";
+
    template = initiateSubComponents(template);
 
    const [el, newTemplate] = getFirstElement(template);
@@ -549,7 +546,7 @@
 
    el.innerHTML = rendered[0];
    instance.dataQF = rendered[1];
-   instance.element = el.id;
+   instance.element = el;
 
    return rendered[0];
  }
@@ -799,6 +796,7 @@
      initiated = initiateSubComponents(template, true),
      // Render parsed html
      rendered = renderTemplate(initiated, data);
+
    const html = g(rendered, counter);
 
    if (!instance.stylesheetInitiated) {
