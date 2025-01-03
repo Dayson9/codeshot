@@ -21,7 +21,7 @@ const Home = new subComponent('Home', {
         </div>
 
         <div class="pxp-el7">
-          <span class="bx bxl-github pxp-el8" onclick={{ window.open('https://github.com/dayson9/codesnap', '_blank') }}></span>
+          <span class="bx bxl-github pxp-el8" onclick={{ window.open('https://github.com/dayson9/codeshot', '_blank') }}></span>
           <span class="bx bxl-twitter pxp-el8" onclick={{ window.open('https://x.com/JsTunde6245', '_blank') }}></span>
         </div>
       </div>
