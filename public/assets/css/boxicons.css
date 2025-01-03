@@ -2,7 +2,7 @@
   font-family: boxicons;
   font-weight: 400;
   font-style: normal;
-  src: url(./boxicons.woff2) format('woff2');
+  src: url(../boxicons.woff2) format('woff2');
 }
 
 .bx {
@@ -17,4 +17,20 @@
   speak: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.bxs-image:before {
+  content: "\edf0"
+}
+
+.bxl-github:before {
+  content: "\e93a"
+}
+
+.bxl-twitter:before {
+  content: "\e982"
+}
+
+.bxs-download:before {
+  content: "\ed95"
 }
