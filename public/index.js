@@ -26,7 +26,7 @@ const saveAsImage = () => {
   htmlToImage.toPng(document.getElementById("out"))
     .then((dataUrl) => {
       const link = document.createElement("a");
-      link.download = "codesnap.png";
+      link.download = "CodeShot.png";
       link.href = dataUrl;
       link.click();
       Preview.data.x = 5;

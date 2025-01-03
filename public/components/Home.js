@@ -9,10 +9,10 @@ const Home = new subComponent('Home', {
     return `
       <div id='main' display={{ this.data.display }}>
         <div class="pxp-el0">
-          <div aria-label='Form icon' class="pxp-el1">
+          <div aria-label='CodeShot icon' class="pxp-el1">
             <h2>CS</h2>
           </div>
-          <h1 class="pxp-el2">CodeSnap</h1>
+          <h1 class="pxp-el2">CodeShot</h1>
         </div>
 
         <div class="pxp-el3">
@@ -50,17 +50,20 @@ const Home = new subComponent('Home', {
        `,
 
     '.pxp-el1': `  
-       background: transparent;
+       background: linear-gradient(120deg, rgb(249, 186, 51), rgb(252, 223, 80));
        width: 45px;
        height: 45px;
        border-radius: 50%;
-       color: white;
        border: inherit;
        display: flex;
        align-items: center;
        box-sizing: border-box;
        justify-content: center; 
        `,
+     '.pxp-el1 h1' : `
+       -webkit-text-fill-color: transparent; 
+       -webkit-background-clip: text;
+     `,
 
     '.pxp-el2': `  
        color: white;

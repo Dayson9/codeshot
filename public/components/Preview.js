@@ -75,21 +75,20 @@ const Preview = new subComponent('Preview', {
 
     '.pxp-el4': `
       width: auto;
-      min-width: 100vw;
       padding: 0px;
       border-radius: 10px;
       background: transparent;
-      box-sizing: content-box;
+      padding-inline: auto;
+      
       `,
 
     '.pxp-el5': `  
-      width: 100%;
+      width: auto;
       background: rgb(51, 62, 66);
       border-radius: inherit;
       height: auto;
       padding: 5px 0px 0px;
       letter-spacing: 2px;
-      box-sizing: content-box;
       `,
 
     '.pxp-el6': `  
@@ -146,8 +145,7 @@ const Preview = new subComponent('Preview', {
       padding-inline: 12px;
       `,
     '.pxp-el14': `  
-      width: 100%;
-      min-width: 100%;
+      width: auto;
       height: auto;
       background: rgb(37, 50, 56);
       border-radius: 0px 0px 10px 10px;
@@ -159,7 +157,10 @@ const Preview = new subComponent('Preview', {
       
     'pre' : `
       padding-inline: 10px;
-    `
+    `,
+   'pre span': `
+    margin-block: 5px;
+   `
   },
   useStrict: false
 });
