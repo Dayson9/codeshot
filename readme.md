@@ -11,6 +11,6 @@ Codeahot allows users to generate high-quality images of code snippets with synt
 
 **Technologies Used:**
 
-* **Frontend:** QueDlow, JavaScript, CSS
+* **Frontend:** QueFlowJS, JavaScript, CSS
 * **Backend:** None
 * **Libraries:** Highlight.js, HTML-to-image.js
