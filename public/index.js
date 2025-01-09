@@ -4,7 +4,7 @@ function navigateTo(path) {
 
 function toPage(path) {
   navigateTo(path);
-
+    
   if (path === '/get-started') {
     Home.data.display = 'none';
     Form.data.display = 'block';
@@ -22,14 +22,12 @@ function toPage(path) {
 }
 
 const saveAsImage = () => {
-  Preview.data.x = 0;
   htmlToImage.toPng(document.getElementById("out"))
     .then((dataUrl) => {
       const link = document.createElement("a");
       link.download = "CodeShot.png";
       link.href = dataUrl;
       link.click();
-      Preview.data.x = 5;
     })
     .catch((err) => {
       console.error("Could not download image\n", err);
@@ -42,7 +40,7 @@ const processCode = (code) => {
   
   const truncated = splitted.map((str) => {
     if(str.length > 62) {
-      return str.slice(0, 50)+'\n  '+str.slice(50);
+      return str.slice(0, 55)+'\n  '+str.slice(50);
     } else {
       return str;
     }

@@ -10,7 +10,18 @@ const Form = new subComponent('Form', {
       <h1 class="pxp-el0">Get Started</h1>
       <div class="pxp-el1">
         <span class="pxp-el2">Code snippet:</span>
-        <textarea class="pxp-el3" placeholder='//paste your code here' id='codeInput'></textarea>
+        <textarea class="pxp-el3" placeholder='//paste your code here' id='codeInput'>htmlToImage.toPng(document.getElementById("out"))
+  .then((dataUrl) => {
+    const link = document.createElement("a");
+    link.download = "CodeShot.png";
+    link.href = dataUrl;
+    link.click();
+    Preview.data.x = 5;
+  })
+  .catch((err) => {
+    console.error("Could not download image", err);
+  });
+        </textarea>
       </div>
       <div class="pxp-el1">
         <span class="pxp-el2">Language:</span>
